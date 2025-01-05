@@ -1,28 +1,11 @@
 #include <iostream>
 #include "Class.h"
-
-void smallobj::setdata(int d)           //метод класса, изменяющий значение поля
-    {
-        somedata = d; 
-    }
-void smallobj::showdata()               //метод класса, отображающий значение поля
-    {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
-    std::cout << "Значение поля равно " << somedata << std::endl; 
-    }
-    
-/* установка данных */
-void part:: setpart(int mn, int pn, float c)
+void Distance::setdist( int ft, float in ) // установка значений полей
+{ feet = ft; inches = in; }
+void Distance::getdist()                  // ввод полей с клавиатуры
 {
-modelnumber = mn;
-partnumber = pn;
-cost = c;
+std::cout << "\nВведите число футов: "; std::cin >> feet;
+std::cout << "Введите число дюймов: "; std::cin >> inches;
 }
-/* вывод данных */
-void part:: showpart()     // вывод данных
-{
-setlocale(LC_ALL, "ru_RU.UTF-8");
-std::cout << "Модель " << modelnumber;
-std::cout << ", деталь " << partnumber;
-std::cout << ", стоимость $" << cost << std::endl;
-}
+void Distance::showdist()                 // вывод полей на экран
+{ std::cout << feet << "\'-" << inches << '\"'; }

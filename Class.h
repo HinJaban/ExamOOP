@@ -1,26 +1,16 @@
 #ifndef CLASS_H
 #define CLASS_H
-/* ---------- Простейший класс ---------- */
-class smallobj                       //определение класса
-{
-    private:
-       int somedata;                 //поле класса
-    public:
-       void setdata(int d);          //метод класса, изменяющий значение поля
-       void showdata();              //метод класса, отображающий значение поля
-       
-};
-
-class part         // определение класса
+class Distance             //длина в английской системе
 {
 private:
-int modelnumber;   // номер изделия
-int partnumber;    // номер детали
-float cost;        // стоимость детали
+int feet;
+float inches;
 public:
-/* установка данных */
-void setpart(int mn, int pn, float c);
-/* вывод данных */
-void showpart();
+void setdist( int ft, float in ); // установка значений полей
+void getdist();                  // ввод полей с клавиатуры
+void showdist();                 // вывод полей на экран
+
 };
+////////////////////////////////////////////////////
+
 #endif
