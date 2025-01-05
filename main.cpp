@@ -3,26 +3,17 @@
 #include "Class.cpp"
 
 
-
-/*
-struct Distance      // длина в английской системе
-{
-int feet;
-float inches;
-};
-////////////////////////////////////////////
-*/
-
 int main()
 {
     setlocale(LC_ALL, "ru_RU.UTF-8");
-    Distance dist1, dist2;            // две длины
-dist1.setdist(11,6.25);        //установка значений для d1
-dist2.getdist();               // ввод значений для dist2
-/* вывод длин на экран */
-std::cout << "\ndist1 = "; dist1.showdist();
-std::cout << "\ndist2 = "; dist2.showdist();
+   Counter c1, c2;          // определение с инициализацией
+std::cout << "\nc1=" << c1.get_count();  // вывод
+std::cout << "\nc2=" << c2.get_count();
+c1.inc_count();          // инкрементирование c1
+c2.inc_count();          // инкрементирование c2
+c2.inc_count();          // инкрементирование c2
+std::cout << "\nc1=" << c1.get_count();  // вывод
+std::cout << "\nc2=" << c2.get_count();
 std::cout << std::endl;
-
     return 0;
 }

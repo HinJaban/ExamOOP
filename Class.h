@@ -1,14 +1,13 @@
 #ifndef CLASS_H
 #define CLASS_H
-class Distance             //длина в английской системе
+class Counter 
 {
-private:
-int feet;
-float inches;
+private: 
+unsigned int count;       // значение счетчика
 public:
-void setdist( int ft, float in ); // установка значений полей
-void getdist();                  // ввод полей с клавиатуры
-void showdist();                 // вывод полей на экран
+Counter();                // конструктор
+void inc_count();         // инкрементирование счетчика
+int get_count();          // получение значения счетчика
 
 };
 ////////////////////////////////////////////////////
