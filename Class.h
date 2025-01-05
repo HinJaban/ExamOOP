@@ -1,5 +1,6 @@
 #ifndef CLASS_H
 #define CLASS_H
+/* ---------- Простейший класс ---------- */
 class smallobj                       //определение класса
 {
     private:
@@ -10,5 +11,16 @@ class smallobj                       //определение класса
        
 };
 
-
+class part         // определение класса
+{
+private:
+int modelnumber;   // номер изделия
+int partnumber;    // номер детали
+float cost;        // стоимость детали
+public:
+/* установка данных */
+void setpart(int mn, int pn, float c);
+/* вывод данных */
+void showpart();
+};
 #endif
