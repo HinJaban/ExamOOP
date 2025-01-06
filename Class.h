@@ -20,7 +20,7 @@ std::cout << "Введите число дюймов: "; std::cin >> inches;
 }
 void showdist()                 // вывод длины на экран
 { std::cout << feet << "\'-" << inches << '\"'; }
-void add_dist(Distance, Distance); //прототип
+Distance add_dist(Distance); // сложение
 };
 ////////////////////////////////////////////////////
 

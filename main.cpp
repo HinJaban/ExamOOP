@@ -6,9 +6,10 @@
 int main()
 {
     setlocale(LC_ALL, "ru_RU.UTF-8");
-    Distance dist1(11,6.25);   // определение и инициализация
-Distance dist2(dist1);     //два конструктора
-Distance dist3 = dist1;    //с одним аргументом
+    Distance dist1, dist3;     // две длины
+Distance dist2(11, 6.25); //определение и инициализация dist2 
+dist1.getdist();          // ввод dist1 пользователем
+dist3 = dist1.add_dist(dist2); //dist3 = dist1 + dist2
 /* вывод всех длин */
 std::cout << "\ndist1 = "; dist1.showdist();
 std::cout << "\ndist2 = "; dist2.showdist();
