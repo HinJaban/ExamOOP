@@ -1,27 +1,44 @@
 #include <iostream>
 #include "Class.h"
 #include "Class.cpp"
-//Шаблон функции вычисления модуля числа 
+
 #include <iostream>
-template <class T>         // шаблон функции
-T abs(T n)
+const int MAX = 100;
+//////////////////////////////////////////////////////////
+template <class Type>
+class Stack
 {
-return (n<0) ? -n: n;
-}
-//-------------------------------------------------------------------
-int main()
+private: 
+Type st[MAX];       // стек: массив любого типа
+int top;
+public:
+Stack()             // конструктор
+{ top = -1; }
+void push(Type var) // занести число в стек
+{ st[++top] = var; }
+Type pop()          // вынуть число из стека
+{ return st[top--]; }
+};
+/////////////////////////////////////////////////////////
+int main() 
 {
-int int1 = 5;
-int int2 = -6;
-long lon1 = 70000L;
-long lon2 = -80000L;
-double dub1 = 9.95;
-double dub2 = -10.15;
-// осуществления вызовов
-std::cout << "\nabs(" << int1 << ")=" << abs(int1); //abs(int)
-std::cout << "\nabs(" << int2 << ")=" << abs(int2); //abs(int)
-std::cout << "\nabs(" << lon1 << ")=" << abs(lon1); //abs(long)
-std::cout << "\nabs(" << lon2 << ")=" << abs(lon2); //abs(long)
-std::cout << "\nabs(" << dub1 << ")=" << abs(dub1); //abs(double)
-std::cout << "\nabs(" << dub2 << ")=" << abs(dub2); //abs(double)
+Stack<float> s1;        //s1 - объект класса Stack<float>
+
+s1.push(1111.1F);       // занести 3 значения float
+s1.push(2222.2F);       // вытолкнуть 3 значения float;
+s1.push(3333.3F);       
+std::cout << "1: " << s1.pop() << std::endl;
+std::cout << "2: " << s1.pop() << std::endl;
+std::cout << "3: " << s1.pop() << std::endl;
+
+Stack<long> s2;         //s2 - объект класса Stack<long>
+
+s2.push(123123123L);    // занести 3 long, вытолкнуть 3 long
+s2.push(234234234L);
+s2.push(345345345L);
+std::cout << "1: " << s2.pop() << std::endl;
+std::cout << "2: " << s2.pop() << std::endl;
+std::cout << "3: " << s2.pop() << std::endl;
+return 0;
 }
+
