@@ -3,6 +3,11 @@
 #include "Class.cpp"
 
 #include <iostream>
+#include <iostream>
+#include "Class.h"
+#include "Class.cpp"
+
+#include <iostream>
 const int MAX = 100;
 //////////////////////////////////////////////////////////
 template <class Type>
