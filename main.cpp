@@ -63,8 +63,9 @@ std::cout << "\ndist2 = "; dist2.showdist();
 }
 catch(Distance::InchesEx ix) // обработчик ошибок
 {
-std::cout << "\nОшибка инициализации: "
-"значение дюймов превышает предельно допустимое. ";
+std::cout << "\nОшибка инициализации. Виновник: " << ix.origin
+<< ".\n Введенное значение дюймов " << ix.iValue
+<< " слишком большое. ";
 }
 std::cout<<std::endl;
 return 0;
