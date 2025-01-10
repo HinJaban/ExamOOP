@@ -1,62 +1,56 @@
-// перегрузка операции +=
+// демонстрация создания безопасного массива, проверяющего
+// свои индексы при использовании
+// используются отдельные функции для установки и получения значения
 #include <iostream>
-//////////////////////////////////////////////////////
-class Distance             // класс английских мер длины
+#include <process.h>   // для функции exit
+const int LIMIT = 100; // размер массива
+///////////////////////////////////////////////////
+class safearray
 {
+    
 private:
-int feet;
-float inches;
+    int arr[LIMIT];
+
 public:
-                // конструктор без параметров 
-Distance ( ) : feet( 0 ), inches( 0.0 )
-{ }
-                // конструктор с двумя параметрами 
-Distance ( int ft, float in ) : feet ( ft ), inches ( in )
-{ }
-                // получение информации от пользователя
-void getdist ( )
-{
-setlocale(LC_ALL, "ru-RU.UTF-8");
-std::cout << "\nВведите футы: "; std::cin >> feet;
-std::cout << "Введите дюймы: "; std::cin >> inches;
-}
-                // показ информации
-void showdist()                
-{ std::cout << feet << "\'-" << inches << '\"'; }
-                // сложение с присвоением
-Distance operator+= ( Distance );
+    // установка значения элемента массива
+    void putel(int n, int elvalue)
+    {
+        setlocale(LC_ALL, "ru-RU.UTF-8");
+        if (n < 0 || n >= LIMIT)
+        {
+            std::cout << "\nОшибочный индекс!";
+            exit(1);
+        }
+        arr[n] = elvalue;
+    }
+    // получение значения элемента массива
+    int getel(int n) const
+    {
+        setlocale(LC_ALL, "ru-RU.UTF-8");
+        if (n < 0 || n >= LIMIT)
+        {
+            std::cout << "\nОшибочный индекс!";
+            exit(1);
+        }
+        return arr[n];
+    }
 };
 //////////////////////////////////////////////////////
-
-// сложение двух длин
-Distance Distance::operator+=( Distance d2 )
-{
-feet += d2.feet;              // складываем футы
-inches += d2.inches;          // складываем дюймы
-if( inches >= 12.0 )          // если дюймов больше 12
-{
-inches -= 12.0;               // то уменьшаем дюймы на 12
-feet++;                       // увеличиваем футы на 1
-}
-return Distance ( feet, inches );
-}
-///////////////////////////////////////////////////
 int main()
 {
-setlocale(LC_ALL, "ru-RU.UTF-8");
-Distance dist1;                   // определяем переменную
-dist1.getdist ( );                // и вводим информацию
-std::cout << "\ndist1 = "; dist1.showdist ( );
+    safearray sa1;
+    setlocale(LC_ALL, "ru-RU.UTF-8");
 
-Distance dist2 ( 11, 6.25 );      // описываем и инициализируем другую переменную
-std::cout << "\ndist2 = "; dist2.showdist ( );
+    // задаем значения элементов
+    for (int j = 0; j < LIMIT; j++)
+        sa1.putel(j, j * 10);
 
-Distance dist3; 
-dist3 = dist1 +=dist2; // dist3 = dist1 + dist2                  
-std::cout << "\nПосле добавления:";
+    // показываем элементы
+    for (int j = 0; j < LIMIT; j++)
+    {
+        int temp = sa1.getel(j);
+        std::cout << "Элемент " << j << " равен " << temp << std::endl;
+    }
 
-std::cout << "\ndist3 = "; dist3.showdist ( );
-std::cout << std::endl;
-
-return 0;
+    return 0;
 }
