@@ -1,66 +1,49 @@
-#include <iostream>
+// строка как класс
 #include "Class.h"
 #include "Class.cpp"
-#include <string>
-class Divide 
+#include <iostream>
+#include <cstring>
+
+///////////////////////////////////////////////////////////
+enum { SZ = 80 }; // максимальный размер строки
+class String
 {
 private:
-int a, b, c;
-public:
-class InchesEx              // класс исключений
+char str [ SZ ];           // сама строка
+public: 
+String ( )                 // конструктор без параметров
+{ str [ 0 ] = '\0'; }
+String ( char s [ ] )      // конструктор с одним параметром
+{ strcpy ( str, s ); }
+void display ( )           // показ строки
+{ std::cout << str; }
+void concat ( String s2 )  // сложение строк
 {
-public:
-std::string origin;              // для имени функции
-float iValue;               // для хранения ошибочного
-                            // значения
-InchesEx(std::string or, float in) // конструктор с
-                            // двумя аргументами
-{
-origin = or;                // сохраненная строка
-                            // с именем виновника ошибки
-iValue = in;                // сохраненное неправильное 
-                            // значение дюймов
+    setlocale(LC_ALL, "ru-RU.UTF-8");
+if ( strlen ( str ) + strlen ( s2.str ) < SZ )
+strcat ( str, s2.str );
+else 
+std::cout << "\nПереполнение!";
 }
-                            // конец класса исключений
 };
-Divide(): a(0), b(1)
-{ 
-  c=a/b;
-}
-Divide(int A, int B): a(A), b(B) 
-{ 
-  if(B==0)
-    throw InchesEx("Конструктор с двумя аргументами", B);
-  a=A;
-  b=B;
-  c=a/b;
-}
-void setValue(int A, int B)
+///////////////////////////////////////
+int main ( )
 {
-  if(B==0)
-    throw InchesEx("Сеттер", B);
-  a=A;
-  b=B;
-}
-int getAnswer(){
-  return c;
-}
+setlocale(LC_ALL, "ru-RU.UTF-8");
+String s1 ( "С Новым годом! " ); // конструктор с одним параметром
+String s2 = "С новым счастьем!"; // аналогично, но в другой форме
+String s3;                       // конструктор без параметров
 
-};
+std::cout << "\ns1="; s1.display ( ); // показываем все строки
+std::cout << "\ns2="; s2.display ( );
+std::cout << "\ns3="; s3.display ( );
 
-int main()
-{
-  setlocale(LC_ALL, "ru_RU.UTF-8");
-  try 
-  {
-    Divide A;
-    A.setValue(5,0);
-  }
-  catch(Divide::InchesEx ix)
-  {
-std::cout << "\nОшибка инициализации. Виновник: " << ix.origin
-<< ".\n Введенное значение делимого " << ix.iValue
-<< " равно ноль. ";
-  }
+s3 = s1;                         // присвоение
+std::cout << "\ns3="; s3.display ( ); 
+
+s3.concat ( s2 );                // сложение
+std::cout << "\ns3="; s3.display ( );
+std::cout << std::endl;
+
 return 0;
 }
