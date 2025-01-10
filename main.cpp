@@ -1,40 +1,67 @@
-// демонстрация создания безопасного массива, проверяющего
-// свои индексы при использовании
-// используется общая функция для установки и получения значения
 #include <iostream>
-#include <process.h>                 // для функции exit
-const int LIMIT = 100;               // размер массива
-///////////////////////////////////////////////////////
-class safearray
+class Distance // класс английских мер длины
 {
 private:
-int arr [ LIMIT ];
+    const float MTF; // коэффициент перевода метров в футы
+    int feet;
+    float inches;
+
 public:
-// стоит обратить внимание, что функция возвращает ссылку!
-int& access ( int n )
-{
-    setlocale(LC_ALL, "ru-RU.UTF-8");
-if( n < 0 || n >= LIMIT )
-{ std::cout << "\nОшибочный индекс!"; exit( 1 ); }
-return arr [ n ];
-}
+    // конструктор без параметров
+    Distance ( ) : feet(0), inches(0.0), MTF(3.280833F)
+    {
+    }
+    // конструктор с одним параметром
+    // переводящий метры в футы и дюймы
+    Distance(float meters) : MTF(3.280833F)
+    {
+        float fltfeet = MTF * meters;   // переводим в футы
+        feet = int(fltfeet);            // берем число полных футов
+        inches = 12 * (fltfeet - feet); // остаток - это дюймы
+    }
+    // конструктор с двумя параметрами
+    Distance(int ft, float in) : feet(ft), inches(in), MTF(3.280833F)
+    {
+    }
+
+    // получение информации от пользователя
+    void getdist ( )
+    {
+        std::cout << "\nВведите футы: ";
+        std::cin >> feet;
+        std::cout << "Введите дюймы: ";
+        std::cin >> inches;
+    }
+    // показ информации
+    void showdist ( ) const
+    {
+        std::cout << feet << "\'-" << inches << '\"';
+    }
+    // оператор перевода для получения метров из футов
+    operator float ( ) const
+    {
+        float fracfeet = inches / 12;         // переводим дюймы в футы
+        fracfeet += static_cast<float>(feet); // добавляем целые футы
+        return fracfeet / MTF;                // переводим в метры
+    }
 };
-///////////////////////////////////////////////////////
-int main ( )
+//////////////////////////////////////////////////
+int main()
 {
-setlocale(LC_ALL, "ru-RU.UTF-8");
-safearray sa1;
+    float mtrs;
+    Distance dist1 = 2.35F; // используется конструктор, переводящий метры в футы и дюймы
 
-// задаем значения элементов
-for ( int j = 0; j < LIMIT; j++ )
-sa1.access ( j ) = j * 10;       // используем функцию слева от знака =
+    std::cout << "\ndist1 = ";
+    dist1.showdist();
+    mtrs = static_cast<float>(dist1); // используем оператор перевода в метры
 
-// показываем элементы
-for ( int j = 0; j < LIMIT; j++ )
-{
-int temp =  sa1.access ( j );    // используем функцию справа от знака =
-std::cout << "Элемент " << j << " равен " << temp << std::endl;
-}
+    std::cout << "\ndist1 = " << mtrs << " meters\n";
 
-return 0;
+    Distance dist2(5, 10.25); // используем конструктор с двумя параметрами
+
+    mtrs = dist2; // неявно используем перевод типа
+    std::cout << "\ndist2 = " << mtrs << " meters\n";
+
+    // dist2 = mtrs; //а вот это ошибка - так делать нельзя
+    return 0;
 }
