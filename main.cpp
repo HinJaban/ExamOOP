@@ -1,67 +1,42 @@
+// перевод обычных строк в класс String
 #include <iostream>
-class Distance // класс английских мер длины
+#include <string.h>        // для функций str*
+///////////////////////////////////////////////////////////
+enum { SZ = 80 };         // максимальный размер строки
+class String              
 {
 private:
-    const float MTF; // коэффициент перевода метров в футы
-    int feet;
-    float inches;
-
-public:
-    // конструктор без параметров
-    Distance ( ) : feet(0), inches(0.0), MTF(3.280833F)
-    {
-    }
-    // конструктор с одним параметром
-    // переводящий метры в футы и дюймы
-    Distance(float meters) : MTF(3.280833F)
-    {
-        float fltfeet = MTF * meters;   // переводим в футы
-        feet = int(fltfeet);            // берем число полных футов
-        inches = 12 * (fltfeet - feet); // остаток - это дюймы
-    }
-    // конструктор с двумя параметрами
-    Distance(int ft, float in) : feet(ft), inches(in), MTF(3.280833F)
-    {
-    }
-
-    // получение информации от пользователя
-    void getdist ( )
-    {
-        std::cout << "\nВведите футы: ";
-        std::cin >> feet;
-        std::cout << "Введите дюймы: ";
-        std::cin >> inches;
-    }
-    // показ информации
-    void showdist ( ) const
-    {
-        std::cout << feet << "\'-" << inches << '\"';
-    }
-    // оператор перевода для получения метров из футов
-    operator float ( ) const
-    {
-        float fracfeet = inches / 12;         // переводим дюймы в футы
-        fracfeet += static_cast<float>(feet); // добавляем целые футы
-        return fracfeet / MTF;                // переводим в метры
-    }
+char str [ SZ ];           // массив для хранения строки
+public: 
+        // конструктор без параметров
+String ( )
+{ str [ 0 ] = '\x0'; }
+        // конструктор с одним параметром
+String ( char s [ ] )      
+{ strcpy ( str, s ); }     // сохраняем строку в массиве
+        // показ строки
+void display ( ) const          
+{ std::cout << str; }
+        // перевод строки к обычному типу
+operator char* ( )
+{ return str; }
 };
-//////////////////////////////////////////////////
-int main()
+///////////////////////////////////////
+int main ( )
 {
-    float mtrs;
-    Distance dist1 = 2.35F; // используется конструктор, переводящий метры в футы и дюймы
+    setlocale(LC_ALL, "ru-RU.UTF-8");
+String s1;                // используем конструктор без параметров
 
-    std::cout << "\ndist1 = ";
-    dist1.showdist();
-    mtrs = static_cast<float>(dist1); // используем оператор перевода в метры
+char xstr [ ] = "Ура, товарищи! "; // создаем обычную строку
 
-    std::cout << "\ndist1 = " << mtrs << " meters\n";
+s1 = xstr;                // неявно используем конструктор с одним параметром
 
-    Distance dist2(5, 10.25); // используем конструктор с двумя параметрами
+s1.display ( );           // показываем строку 
 
-    mtrs = dist2; // неявно используем перевод типа
-    std::cout << "\ndist2 = " << mtrs << " meters\n";
+String s2 = "Мы победим!";// снова используем конструктор с параметром
 
-    // dist2 = mtrs; //а вот это ошибка - так делать нельзя
-    return 0;
+std::cout << static_cast<char*> ( s2 ); // используем оператор перевода типа
+std::cout << std::endl;
+
+return 0;
 }
