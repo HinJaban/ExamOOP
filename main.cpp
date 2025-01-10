@@ -1,48 +1,57 @@
 // строка как класс
-#include "Class.h"
-#include "Class.cpp"
 #include <iostream>
-#include <cstring>
-
+#include <string.h>        // для функций strcpy, strcat
+#include <stdlib.h>        // для функции exit
 ///////////////////////////////////////////////////////////
-enum { SZ = 80 }; // максимальный размер строки
-class String
+enum { SZ = 80 };         // максимальный размер строки
+class String               // наш класс для строк
 {
 private:
+
 char str [ SZ ];           // сама строка
 public: 
-String ( )                 // конструктор без параметров
-{ str [ 0 ] = '\0'; }
-String ( char s [ ] )      // конструктор с одним параметром
+        // конструктор без параметров
+String ( )
+{ strcpy ( str, "" ); }
+        // конструктор с одним параметром
+String ( char s [ ] )      
 { strcpy ( str, s ); }
-void display ( )           // показ строки
+        // показ строки
+void display ( ) const          
 { std::cout << str; }
-void concat ( String s2 )  // сложение строк
+String operator+ ( String ss) const
 {
-    setlocale(LC_ALL, "ru-RU.UTF-8");
-if ( strlen ( str ) + strlen ( s2.str ) < SZ )
-strcat ( str, s2.str );
-else 
+setlocale(LC_ALL, "ru-RU.UTF-8");
+String temp;                 // временная переменная
+if ( strlen ( str ) + strlen ( ss.str ) < SZ)
+{
+strcpy ( temp.str, str );    // копируем содержимое первой строки
+strcat ( temp.str, ss.str ); // добавляем содержимое второй строки
+}
+else
+{
 std::cout << "\nПереполнение!";
+exit ( 1 );
+}
+return temp;                 // возвращаем результат
 }
 };
 ///////////////////////////////////////
 int main ( )
 {
 setlocale(LC_ALL, "ru-RU.UTF-8");
-String s1 ( "С Новым годом! " ); // конструктор с одним параметром
-String s2 = "С новым счастьем!"; // аналогично, но в другой форме
-String s3;                       // конструктор без параметров
+String s1 ( "С Рождеством! " );// используем конструктор с параметром
+String s2 = "С новым годом!";  // Используем конструктор с параметром
+String s3;                     // используем конструктор без параметров
 
-std::cout << "\ns1="; s1.display ( ); // показываем все строки
-std::cout << "\ns2="; s2.display ( );
-std::cout << "\ns3="; s3.display ( );
+// показываем строки
+s1.display ( ); 
+s2.display ( );
+s3.display ( );
 
-s3 = s1;                         // присвоение
-std::cout << "\ns3="; s3.display ( ); 
+s3 = s1 + s2;                  // присваиваем строке s3 результат сложения строк s1 и s2
 
-s3.concat ( s2 );                // сложение
-std::cout << "\ns3="; s3.display ( );
+s3.display ( );                // показываем результат
 std::cout << std::endl;
 
 return 0;
