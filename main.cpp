@@ -24,12 +24,12 @@ std::cout << "Введите дюймы: "; std::cin >> inches;
 void showdist()                
 { std::cout << feet << "\'-" << inches << '\"'; }
                 // сложение с присвоением
-void operator+= ( Distance );
+Distance operator+= ( Distance );
 };
 //////////////////////////////////////////////////////
 
 // сложение двух длин
-void Distance::operator+=( Distance d2 )
+Distance Distance::operator+=( Distance d2 )
 {
 feet += d2.feet;              // складываем футы
 inches += d2.inches;          // складываем дюймы
@@ -38,6 +38,7 @@ if( inches >= 12.0 )          // если дюймов больше 12
 inches -= 12.0;               // то уменьшаем дюймы на 12
 feet++;                       // увеличиваем футы на 1
 }
+return Distance ( feet, inches );
 }
 ///////////////////////////////////////////////////
 int main()
@@ -50,10 +51,11 @@ std::cout << "\ndist1 = "; dist1.showdist ( );
 Distance dist2 ( 11, 6.25 );      // описываем и инициализируем другую переменную
 std::cout << "\ndist2 = "; dist2.showdist ( );
 
-dist1 += dist2;                   // dist1 = dist1 + dist2
+Distance dist3; 
+dist3 = dist1 +=dist2; // dist3 = dist1 + dist2                  
 std::cout << "\nПосле добавления:";
 
-std::cout << "\ndist1 = "; dist1.showdist ( );
+std::cout << "\ndist3 = "; dist3.showdist ( );
 std::cout << std::endl;
 
 return 0;
